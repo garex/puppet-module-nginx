@@ -2,8 +2,7 @@ define nginx::site (
   $server_name,
   $root,
   $root_owner = undef,
-  $root_group = undef,
-  $index      = "index.html"
+  $root_group = undef
 ) {
 
   file {
