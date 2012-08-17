@@ -1,0 +1,12 @@
+server {
+  server_name   <%= server_name %>;
+  root          <%= root %>;
+
+  location / {
+    index   <%= index %>;
+  }
+
+  location ~ /\.ht {
+    deny  all;
+  }
+}
