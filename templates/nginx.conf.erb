@@ -22,7 +22,7 @@ http {
   gzip_disable        "MSIE [1-6]\.(?!.*SV1)";
 <% end %>
 
-  include /etc/nginx/conf.d/*.conf;
+  include /etc/nginx/conf.d/*.site.conf;
 
   server_tokens off;
 }

@@ -14,7 +14,7 @@ define nginx::site (
       group   => $root_group;
 
     "Nginx configuration file for site $name":
-      path    => "/etc/nginx/conf.d/$name.conf",
+      path    => "/etc/nginx/conf.d/$name.site.conf",
       content => template("nginx/nginx.site.conf.erb"),
       require => [
         File["Nginx root directory for site $name"],
