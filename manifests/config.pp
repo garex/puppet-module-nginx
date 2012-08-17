@@ -23,4 +23,10 @@ class nginx::config {
       ensure    => absent;
   }
 
+  $config_directory = "/etc/nginx/conf.d"
+  exec {"Nginx config purge":
+    command     => "rm $config_directory/*",
+    onlyif      => "test $(ls $config_directory | wc -l) > 0",
+  }
+
 }
