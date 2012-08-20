@@ -16,6 +16,12 @@ class nginx::config {
       path      => "/var/www",
       ensure    => directory;
 
+    "Nginx config directory should be fresh":
+      recurse   => true,
+      purge     => true,
+      path      => "/etc/nginx/conf.d",
+      ensure    => directory;
+
     "Nginx sites enabled":
       path      => "/etc/nginx/sites-enabled",
       recurse   => true,
@@ -27,12 +33,6 @@ class nginx::config {
       recurse   => true,
       force     => true,
       ensure    => absent;
-  }
-
-  $config_directory = "/etc/nginx/conf.d"
-  exec {"Nginx config purge":
-    command     => "rm -f $config_directory/*",
-    onlyif      => "test $(ls $config_directory | wc -l) > 0",
   }
 
 }

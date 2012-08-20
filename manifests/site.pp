@@ -20,7 +20,6 @@ define nginx::site (
       content => template("nginx/site.conf.erb"),
       require => [
         File["Nginx root directory for site $name"],
-        Exec["Nginx config purge"],
         Package["nginx"]
       ],
       notify  => Service["nginx"];

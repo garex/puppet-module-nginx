@@ -9,7 +9,6 @@ define nginx::backend::php (
   File {
     require => [
       File["Nginx root directory for site $name"],
-      Exec["Nginx config purge"],
       Package["nginx"]
     ],
     notify  => Service["nginx"]
