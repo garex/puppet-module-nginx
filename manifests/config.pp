@@ -10,6 +10,12 @@ class nginx::config {
       notify    => Service["nginx"],
       content   => template("nginx/nginx.conf.erb");
 
+    "Nginx default www directory":
+      owner     => "root",
+      group     => "root",
+      path      => "/var/www",
+      ensure    => directory;
+
     "Nginx sites enabled":
       path      => "/etc/nginx/sites-enabled",
       recurse   => true,
@@ -25,7 +31,7 @@ class nginx::config {
 
   $config_directory = "/etc/nginx/conf.d"
   exec {"Nginx config purge":
-    command     => "rm $config_directory/*",
+    command     => "rm -f $config_directory/*",
     onlyif      => "test $(ls $config_directory | wc -l) > 0",
   }
 

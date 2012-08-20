@@ -11,6 +11,7 @@ define nginx::site (
     "Nginx root directory for site $name":
       path    => $root,
       ensure  => directory,
+      require => File["Nginx default www directory"],
       owner   => $root_owner,
       group   => $root_group;
 
