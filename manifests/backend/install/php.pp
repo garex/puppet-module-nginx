@@ -5,6 +5,13 @@ class nginx::backend::install::php {
     ensure  => installed,
   }
 
+  file {"PHP FPM pool config directory should be fresh":
+      recurse => true,
+      purge   => true,
+      path    => "/etc/php5/fpm/pool.d",
+      ensure  => directory
+  }
+
   if ($::operatingsystem == debian) {
     exec {"Fix FPM sources":
       onlyif  => "test ! $(grep packages.dotdeb.org /etc/apt/sources.list)",

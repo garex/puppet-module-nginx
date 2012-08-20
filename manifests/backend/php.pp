@@ -11,10 +11,14 @@ define nginx::backend::php (
       File["Nginx root directory for site $name"],
       Package["nginx"]
     ],
-    notify  => Service["nginx"]
+    notify  => [Service["nginx"], Service["php5-fpm"]]
   }
 
   file {
+    "PHP FPM backend config for $name":
+      path    => "/etc/php5/fpm/pool.d/pool$port.conf",
+      content => template("nginx/backend.php.fpm.pool.conf.erb");
+
     "Nginx php backend before for site $name":
       path    => "/etc/nginx/conf.d/$name.backend.php.before.conf",
       content => template("nginx/backend.php.before.conf.erb");
