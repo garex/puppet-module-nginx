@@ -1,6 +1,5 @@
 define nginx::backend::php (
   $port       = 9000,
-  $index      = "index.html index.htm index.php",
   $try_files  = '$uri $uri/ $uri/index.html /index.php?url=$uri&$args'
 ) {
 
