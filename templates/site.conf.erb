@@ -1,10 +1,12 @@
+include "conf.d/<%= name %>.*.before.conf";
+
 server {
   server_name   <%= server_name %>;
   root          <%= root %>;
+  index         <%= index %>;
+  try_files     <%= try_files %>;
 
-  location / {
-    index   <%= index %>;
-  }
+  include "conf.d/<%= name %>.*.inside.conf";
 
   location = /favicon.ico {
     log_not_found off;
@@ -24,3 +26,5 @@ server {
   }
 
 }
+
+include "conf.d/<%= name %>.*.after.conf";
