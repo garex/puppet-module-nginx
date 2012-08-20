@@ -9,8 +9,20 @@ define nginx::backend::php (
     ensure  => installed,
   }
 
+  if ($::operatingsystem == debian) {
+    exec {"Fix FPM sources for $name":
+      onlyif  => "test ! $(grep packages.dotdeb.org /etc/apt/sources.list)",
+      command => 'echo "deb http://packages.dotdeb.org stable all" >> /etc/apt/sources.list; wget -O - www.dotdeb.org/dotdeb.gpg | sudo apt-key add -; apt-get update;',
+    }
+  } else {
+    exec {"Fix FPM sources for $name":
+      onlyif  => "test ! true",
+      command => 'test',
+    }
+  }
+
   package {"PHP FPM and CGI for $name":
-    require => Package["PHP commons for $name"],
+    require => [Package["PHP commons for $name"], Exec["Fix FPM sources for $name"]],
     name    => ["php5-fpm", "php5-cgi"],
     ensure  => installed,
   }
