@@ -1,6 +1,28 @@
 define nginx::backend::php (
-  $port = 9000
+  $port       = 9000,
+  $index      = "index.html index.htm index.php",
+  $try_files  = '$uri $uri/ $uri/index.html /index.php?url=$uri&$args'
 ) {
+
+  package {"PHP commons for $name":
+    name    => ["php5-cli", "php5-common", "php5-suhosin"],
+    ensure  => installed,
+  }
+
+  package {"PHP FPM and CGI for $name":
+    require => Package["PHP commons for $name"],
+    name    => ["php5-fpm", "php5-cgi"],
+    ensure  => installed,
+  }
+
+  service {"PHP FPM service for $name":
+    name        => "php5-fpm",
+    ensure      => running,
+    hasstatus   => true,
+    hasrestart  => true,
+    enable      => true,
+    require     => Package["PHP FPM and CGI for $name"],
+  }
 
   File {
     require => [

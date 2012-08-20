@@ -4,7 +4,7 @@ define nginx::site (
   $root_owner = undef,
   $root_group = undef,
   $index      = "index.html index.htm",
-  $try_files  = "\$uri \$uri/ \$uri.html =404"
+  $try_files  = '$uri $uri/ $uri.html =404'
 ) {
 
   file {
