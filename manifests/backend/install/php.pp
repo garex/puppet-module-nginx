@@ -6,6 +6,7 @@ class nginx::backend::install::php {
   }
 
   file {"PHP FPM pool config directory should be fresh":
+      require => Package["PHP FPM and CGI"],
       recurse => true,
       purge   => true,
       path    => "/etc/php5/fpm/pool.d",
