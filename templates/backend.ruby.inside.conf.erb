@@ -1,0 +1,15 @@
+location = / {
+  try_files non_existent_file @rubybackend;
+}
+
+location / {
+  try_files <%= try_files%>;
+}
+
+location @rubybackend {
+  proxy_set_header  X-Real-IP        $remote_addr;
+  proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+  proxy_set_header  Host             $http_host;
+  proxy_redirect    off;
+  proxy_pass        http://rubybackend<%= port%>;
+}

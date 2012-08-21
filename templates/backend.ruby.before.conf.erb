@@ -1,0 +1,5 @@
+upstream rubybackend<%= port %> {
+<% servers.to_i.times do |i| -%>
+  server <%= address %>:<%= port.to_i + i %>;
+<% end -%>
+}
