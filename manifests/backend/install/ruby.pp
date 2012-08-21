@@ -3,7 +3,7 @@ class nginx::backend::install::ruby {
   $thin = "$(gem env gemdir)/bin/thin"
 
   package {"Ruby gems provider":
-    name        => ["rubygems", "rake"]
+    name        => "rubygems"
   }
 
   package {"Ruby backend service":

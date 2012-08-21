@@ -16,6 +16,13 @@ define nginx::backend::ruby (
     notify  => [Service["nginx"], Service["thin"]]
   }
 
+  $test_welcome = "<h1>$name (nginx + ruby backend)</h1>"
+  file {"Ruby backend test file for site $name":
+    replace   => false,
+    path      => "$root/config.ru",
+    content   => template("nginx/backend.ruby.test.config.ru.erb")
+  }
+
   file {
     "Ruby backend config for $name":
       path    => "/etc/thin/$name.yml",
