@@ -25,6 +25,7 @@ class nginx::backend::install::ruby {
   }
 
   exec {"Install ruby backend service":
+    require     => Exec["Making thin bin visible"],
     creates     => "/etc/thin",
     command     => "thin install; $persistent_service",
   }
