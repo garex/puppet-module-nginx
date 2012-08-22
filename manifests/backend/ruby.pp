@@ -3,6 +3,7 @@ define nginx::backend::ruby (
   $port       = 8000,
   $address    = '127.0.0.1',
   $servers    = 3,
+  $is_welcome = false,
   $try_files  = '$uri $uri/ $uri/index.html @rubybackend'
 ) {
 
@@ -16,11 +17,13 @@ define nginx::backend::ruby (
     notify  => [Service["nginx"], Service["thin"]]
   }
 
-  $test_welcome = "<h1>$name (nginx + ruby backend)</h1>"
-  file {"Ruby backend test file for site $name":
-    replace   => false,
-    path      => "$root/config.ru",
-    content   => template("nginx/backend.ruby.test.config.ru.erb")
+  if $is_welcome {
+    $test_welcome = "<h1>$name (nginx + ruby backend)</h1>"
+    file {"Ruby backend test file for site $name":
+      replace   => false,
+      path      => "$root/config.ru",
+      content   => template("nginx/backend.ruby.test.config.ru.erb")
+    }
   }
 
   file {
