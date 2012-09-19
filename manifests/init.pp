@@ -8,6 +8,8 @@ class nginx (
   $gzip               = false
 ) {
 
+  import "osfamily"
+
   include nginx::package
   include nginx::config
   include nginx::service

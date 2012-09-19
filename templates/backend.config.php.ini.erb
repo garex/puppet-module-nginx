@@ -1,0 +1,5 @@
+<% scope.class_scope('nginx::backend::config::php').to_hash(false).each do |k, v| -%>
+<% next if ['name', 'title', 'module_name'].include? k -%>
+<% next if k.to_s.start_with? '_' -%>
+<%= k.gsub('__', '.') %> = <%= v %>
+<% end -%>
