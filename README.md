@@ -59,11 +59,14 @@ Title "Our site name" should be unique as it's some sort of id between other sit
     root_owner  => "www-data",
     root_group  => "www-data",
     index       => "index.html index.htm",
-    try_files   => '$uri $uri/ $uri.html =404'
+    try_files   => '$uri $uri/ $uri.html =404',
+    custom_inside => "puppet:///modules/your-module/path-to-file.conf"
   }
 ```
 All params here are named same as in nginx config. It will help you to expand easily by adding new params and also to search in nginx wiki by their names.
 *Abstraction here is just evil.*
+
+**custom_inside** param is a method to pass your own nginx config inside. It's a puppet path to file in some of your modules.
 
 **Note** Single quotes around try_files are for this: in double quotes puppet will try to expand $uri variable and become sad.
 
