@@ -1,10 +1,11 @@
 define nginx::site (
   $server_name,
   $root,
-  $root_owner = undef,
-  $root_group = undef,
-  $index      = "index.html index.htm",
-  $try_files  = '$uri $uri/ $uri.html =404'
+  $root_owner     = undef,
+  $root_group     = undef,
+  $index          = "index.html index.htm",
+  $try_files      = '$uri $uri/ $uri.html =404',
+  $custom_inside  = undef
 ) {
 
   file {
@@ -23,6 +24,16 @@ define nginx::site (
         Package["nginx"]
       ],
       notify  => Service["nginx"];
+  }
+
+  if $custom_inside {
+    file {"Nginx custom configuration file for site $name":
+      ensure  => "present",
+      path    => "/etc/nginx/conf.d/$name.custom.inside.conf",
+      source  => $custom_inside,
+      require => File["Nginx configuration file for site $name"],
+      notify  => Service["nginx"];
+    }
   }
 
 }

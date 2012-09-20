@@ -10,6 +10,7 @@ Allows us to have:
  * independend sites
  * and independent backends (currently ruby and php)
  * *easily* extend to other backends
+ * conigure php backend (systemwide)
 
 It works on one simple principle:
 
@@ -58,11 +59,14 @@ Title "Our site name" should be unique as it's some sort of id between other sit
     root_owner  => "www-data",
     root_group  => "www-data",
     index       => "index.html index.htm",
-    try_files   => '$uri $uri/ $uri.html =404'
+    try_files   => '$uri $uri/ $uri.html =404',
+    custom_inside => "puppet:///modules/your-module/path-to-file.conf"
   }
 ```
 All params here are named same as in nginx config. It will help you to expand easily by adding new params and also to search in nginx wiki by their names.
 *Abstraction here is just evil.*
+
+**custom_inside** param is a method to pass your own nginx config inside. It's a puppet path to file in some of your modules.
 
 **Note** Single quotes around try_files are for this: in double quotes puppet will try to expand $uri variable and become sad.
 
@@ -95,6 +99,24 @@ And for our lovely php:
 When adding backends, please watch for your port ranges -- they should not intersects. In ruby backend (thin web-server) it will create by default 3 servers on ports 8000, 8001 & 8002.
 
 **Note.** Pls remember to use same title as for site: "Our site name".
+
+### Configure PHP backend
+
+```ruby
+    class {"nginx::backend::config::php":
+      display_errors      => "On",
+      error_reporting     => "E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT",
+      expose_php          => "Off",
+      html_errors         => "On",
+      memory_limit        => "32M",
+      short_open_tag      => "yes",
+      date__timezone      => "Asia/Novosibirsk",  # <-- Here we set date.timezone key
+    }
+```
+
+**Note.** Dots in config keys are replaced by two underscores. Anyway if you have
+IDE or some kind of code completeion -- it shouldn't be a problem as all possible
+(or just many of them) keys are incorporated in *nginx::backend::config::php* class.
 
 ## GOODTODO
 
