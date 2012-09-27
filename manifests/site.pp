@@ -9,12 +9,16 @@ define nginx::site (
 ) {
 
   file {
-    "Nginx root directory for site $name":
-      path    => $root,
+     $root:
       ensure  => directory,
       require => File["Nginx default www directory"],
       owner   => $root_owner,
       group   => $root_group;
+
+    "Nginx root directory for site $name":
+      require => File[$root],
+      ensure  => "present",
+      path    => "/tmp/puppet-module-nginx-site-workaround-for-bug-4867-$name";
 
     "Nginx configuration file for site $name":
       path    => "/etc/nginx/conf.d/$name.site.conf",
