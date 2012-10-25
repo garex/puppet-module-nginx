@@ -1,0 +1,7 @@
+server {
+  server_name   <%= server_name %>;
+
+  location / {
+    proxy_pass <%= upstream_name %>;
+  }
+}

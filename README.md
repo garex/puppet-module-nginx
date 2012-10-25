@@ -11,6 +11,7 @@ Allows us to have:
  * and independent backends (currently ruby and php)
  * *easily* extend to other backends
  * conigure php backend (systemwide)
+ * simplest proxies
 
 It works on one simple principle:
 
@@ -117,6 +118,16 @@ When adding backends, please watch for your port ranges -- they should not inter
 **Note.** Dots in config keys are replaced by two underscores. Anyway if you have
 IDE or some kind of code completeion -- it shouldn't be a problem as all possible
 (or just many of them) keys are incorporated in *nginx::backend::config::php* class.
+
+### Add proxy to some backend
+
+```ruby
+  nginx::proxy {"Erabota staging":
+    server_name   => "front.end",
+    upstream_name => "http://back.end"
+  }
+```
+Current version of proxy is simplest of possible -- just two directives, but it will work.
 
 ## GOODTODO
 
