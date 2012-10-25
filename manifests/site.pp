@@ -5,6 +5,7 @@ define nginx::site (
   $root_group     = undef,
   $index          = "index.html index.htm",
   $try_files      = '$uri $uri/ $uri.html =404',
+  $is_default     = false,
   $custom_inside  = undef
 ) {
 

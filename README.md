@@ -61,6 +61,7 @@ Title "Our site name" should be unique as it's some sort of id between other sit
     root_group  => "www-data",
     index       => "index.html index.htm",
     try_files   => '$uri $uri/ $uri.html =404',
+    is_default  => true,
     custom_inside => "puppet:///modules/your-module/path-to-file.conf"
   }
 ```
