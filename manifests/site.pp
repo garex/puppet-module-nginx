@@ -13,7 +13,7 @@ define nginx::site (
      $root:
       ensure  => directory,
       require => File["Nginx default www directory"],
-      recurse => true,
+      recurse => false,
       owner   => $root_owner,
       group   => $root_group;
 
