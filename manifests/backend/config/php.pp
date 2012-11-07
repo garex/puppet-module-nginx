@@ -86,7 +86,7 @@ class nginx::backend::config::php (
   $sendmail_path = undef,
   $serialize_precision = undef,
   $short_open_tag = undef,
-  $SMTP = undef,
+  $smtp = undef,
   $smtp_port = undef,
   $sql__safe_mode = undef,
   $track_errors = undef,

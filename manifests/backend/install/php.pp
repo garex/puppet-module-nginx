@@ -1,5 +1,10 @@
 class nginx::backend::install::php {
 
+  # Set global defaults
+  Exec {
+    path => "/usr/bin:/usr/sbin/:/bin:/sbin"
+  }
+
   package {"PHP commons":
     name    => ["php5-cli", "php5-common", "php5-suhosin"],
     ensure  => installed,

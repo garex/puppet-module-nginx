@@ -5,6 +5,8 @@ define nginx::site (
   $root_group     = undef,
   $index          = "index.html index.htm",
   $try_files      = '$uri $uri/ $uri.html =404',
+  $is_default     = false,
+  $client_max_body_size = undef,
   $custom_inside  = undef
 ) {
 
@@ -12,7 +14,7 @@ define nginx::site (
      $root:
       ensure  => directory,
       require => File["Nginx default www directory"],
-      recurse => true,
+      recurse => false,
       owner   => $root_owner,
       group   => $root_group;
 
