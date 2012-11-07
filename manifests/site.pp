@@ -6,6 +6,7 @@ define nginx::site (
   $index          = "index.html index.htm",
   $try_files      = '$uri $uri/ $uri.html =404',
   $is_default     = false,
+  $client_max_body_size = undef,
   $custom_inside  = undef
 ) {
 

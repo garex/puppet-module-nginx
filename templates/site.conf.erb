@@ -4,6 +4,9 @@ server {
 <% if is_default %>
   listen        80 default;
 <% end %>
+<% if client_max_body_size %>
+  client_max_body_size <%= client_max_body_size %>;
+<% end %>
   server_name   <%= server_name %>;
   root          <%= root %>;
   index         <%= index %>;
