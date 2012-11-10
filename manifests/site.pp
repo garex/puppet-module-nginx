@@ -1,15 +1,23 @@
 define nginx::site (
   $server_name,
   $root,
-  $redirect_from_aliases = undef,
-  $root_owner     = undef,
-  $root_group     = undef,
-  $index          = "index.html index.htm",
-  $try_files      = '$uri $uri/ $uri.html =404',
-  $is_default     = false,
-  $client_max_body_size = undef,
-  $custom_inside  = undef
+  $redirect_from_aliases  = undef,
+  $root_owner             = undef,
+  $root_group             = undef,
+  $index                  = "index.html index.htm",
+  $try_files              = '$uri $uri/ $uri.html =404',
+  $is_default             = false,
+  $is_independent_logs    = false,
+  $client_max_body_size   = undef,
+  $custom_inside          = undef
 ) {
+
+  $server_name_0 = inline_template("<%= server_name.split(' ')[0] %>")
+  if $is_independent_logs {
+    $logs_prefix = "$server_name_0."
+  } else {
+    $logs_prefix = ""
+  }
 
   file {
      $root:

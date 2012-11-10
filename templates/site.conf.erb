@@ -3,7 +3,7 @@ include "conf.d/<%= name %>.*.before.conf";
 <% if @redirect_from_aliases -%>
   server {
     server_name <%= redirect_from_aliases %>;
-    return 301 $scheme://<%= server_name.split(' ')[0] %>$request_uri;
+    return 301 $scheme://<%= server_name_0 %>$request_uri;
   }
 <% end -%>
 server {
@@ -14,6 +14,9 @@ server {
   root          <%= root %>;
   index         <%= index %>;
   try_files     <%= try_files %>;
+  access_log    /var/log/nginx/<%= logs_prefix %>access.log;
+  error_log     /var/log/nginx/<%= logs_prefix %>error.log;
+
 <% if @client_max_body_size -%>
   client_max_body_size <%= client_max_body_size %>;
 <% end -%>

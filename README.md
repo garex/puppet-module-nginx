@@ -13,6 +13,7 @@ Allows us to have:
  * conigure php backend (systemwide)
  * simplest proxies
  * redirects from aliases (like www.site.com to site.com)
+ * logs by site`s host name instead of default common logs (access.log and error.log)
 
 It works on one simple principle:
 
@@ -64,6 +65,7 @@ Title "Our site name" should be unique as it's some sort of id between other sit
     index       => "index.html index.htm",
     try_files   => '$uri $uri/ $uri.html =404',
     is_default  => true,
+    is_independent_logs => true,
     custom_inside => "puppet:///modules/your-module/path-to-file.conf"
   }
 ```
@@ -74,7 +76,21 @@ Most params here are named same as in nginx config. It will help you to expand e
 
 **redirect_from_aliases** param is for redirecting from secondary domains (aliases) to the main domain with persistent code.
 
+**is_independent_logs** param gives us individual access and error logs for site.
+
 **Note** Single quotes around try_files are for this: in double quotes puppet will try to expand $uri variable and become sad.
+
+### Enable some site`s param globally
+
+Imagine, that we want independent logs for all sites by default -- we can use puppet`s defaults:
+
+```ruby
+  Nginx::Site {
+    is_independent_logs => true,
+  }
+```
+
+Same is true for other params and classes.
 
 ### Add backend to the site
 
