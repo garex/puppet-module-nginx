@@ -132,7 +132,7 @@ When adding backends, please watch for your port ranges -- they should not inter
       html_errors         => "On",
       memory_limit        => "32M",
       short_open_tag      => "yes",
-      date__timezone      => "Asia/Novosibirsk",  # <-- Here we set date.timezone key
+      date__timezone      => "Antarctica/Vostok",  # <-- Here we set date.timezone key
     }
 ```
 
@@ -143,7 +143,7 @@ IDE or some kind of code completeion -- it shouldn't be a problem as all possibl
 ### Add proxy to some backend
 
 ```ruby
-  nginx::proxy {"Erabota staging":
+  nginx::proxy {"Frontend to backend":
     server_name   => "front.end",
     upstream_name => "http://back.end"
   }
