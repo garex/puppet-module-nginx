@@ -1,5 +1,11 @@
 include "conf.d/<%= name %>.*.before.conf";
 
+<% if @redirect_from_aliases -%>
+  server {
+    server_name <%= redirect_from_aliases %>;
+    return 301 $scheme://<%= server_name.split(' ')[0] %>$request_uri;
+  }
+<% end -%>
 server {
 <% if is_default -%>
   listen        80 default;

@@ -1,6 +1,7 @@
 define nginx::site (
   $server_name,
   $root,
+  $redirect_from_aliases = undef,
   $root_owner     = undef,
   $root_group     = undef,
   $index          = "index.html index.htm",
