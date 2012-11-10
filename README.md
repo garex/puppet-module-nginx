@@ -12,6 +12,8 @@ Allows us to have:
  * *easily* extend to other backends
  * conigure php backend (systemwide)
  * simplest proxies
+ * redirects from aliases (like www.site.com to site.com)
+ * logs by site`s host name instead of default common logs (access.log and error.log)
 
 It works on one simple principle:
 
@@ -56,21 +58,39 @@ Title "Our site name" should be unique as it's some sort of id between other sit
 ```ruby
   nginx::site {"Our site name":
     server_name => "our.site.com",
+    redirect_from_aliases => "www.our.site.com",
     root        => "/var/www/our.site.com",
     root_owner  => "www-data",
     root_group  => "www-data",
     index       => "index.html index.htm",
     try_files   => '$uri $uri/ $uri.html =404',
     is_default  => true,
+    is_independent_logs => true,
     custom_inside => "puppet:///modules/your-module/path-to-file.conf"
   }
 ```
-All params here are named same as in nginx config. It will help you to expand easily by adding new params and also to search in nginx wiki by their names.
+Most params here are named same as in nginx config. It will help you to expand easily by adding new params and also to search in nginx wiki by their names.
 *Abstraction here is just evil.*
 
 **custom_inside** param is a method to pass your own nginx config inside. It's a puppet path to file in some of your modules.
 
+**redirect_from_aliases** param is for redirecting from secondary domains (aliases) to the main domain with persistent code.
+
+**is_independent_logs** param gives us individual access and error logs for site.
+
 **Note** Single quotes around try_files are for this: in double quotes puppet will try to expand $uri variable and become sad.
+
+### Enable some site`s param globally
+
+Imagine, that we want independent logs for all sites by default -- we can use puppet`s defaults:
+
+```ruby
+  Nginx::Site {
+    is_independent_logs => true,
+  }
+```
+
+Same is true for other params and classes.
 
 ### Add backend to the site
 
