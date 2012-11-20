@@ -33,6 +33,7 @@ Add this to your main module:
     user                => "www-data",
     worker_processes    => 1,
     worker_connections  => 1024,
+    worker_rlimit_nofile=> 8192,
     gzip                => false
   }
 ```

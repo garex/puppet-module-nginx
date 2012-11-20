@@ -3,9 +3,10 @@ class nginx (
     /(?i)centos|fedora|redhat/ => "nginx",
     default                    => "www-data",
   },
-  $worker_processes   = 1,
-  $worker_connections = 1024,
-  $gzip               = false
+  $worker_processes     = 1,
+  $worker_connections   = 1024,
+  $worker_rlimit_nofile = 8192,
+  $gzip                 = false
 ) {
 
   import "osfamily"
