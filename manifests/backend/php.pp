@@ -1,9 +1,11 @@
 define nginx::backend::php (
-  $port       = 9000,
-  $try_files  = '$uri $uri/ $uri/index.html /index.php?url=$uri&$args',
-  $pool_user  = "www-data",
-  $pool_group = "www-data",
-  $variables  = []
+  $port             = 9000,
+  $try_files        = '$uri $uri/ $uri/index.html /index.php?url=$uri&$args',
+  $pool_user        = "www-data",
+  $pool_group       = "www-data",
+  $pm_max_requests  = 0,
+  $rlimit_files     = undef,
+  $variables        = []
 ) {
 
   include nginx::backend::install::php
