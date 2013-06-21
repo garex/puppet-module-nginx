@@ -1,5 +1,8 @@
 server {
-  server_name   <%= server_name %>;
+  server_name         <%= server_name %>;
+  proxy_set_header    X-Real-IP     $remote_addr;
+  proxy_set_header    X-Real-Host   $host;
+  proxy_set_header    Host          $host;
 
   location / {
     proxy_pass <%= upstream_name %>;
