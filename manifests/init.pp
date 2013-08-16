@@ -1,7 +1,7 @@
 class nginx (
-  $user               = $::operatingsystem ? {
-    /(?i)centos|fedora|redhat/ => "nginx",
-    default                    => "www-data",
+  $user               = $::osfamily ? {
+    RedHat                     => "nginx",
+    default                    => "www-data"
   },
   $worker_processes     = 1,
   $worker_connections   = 1024,
