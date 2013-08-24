@@ -20,8 +20,8 @@ class nginx::backend::install::php {
 
   if ($::osfamily == Debian) {
     exec {"Fix FPM sources":
-      onlyif  => "test ! $(grep packages.dotdeb.org /etc/apt/sources.list)",
-      command => 'echo "deb http://packages.dotdeb.org stable all" >> /etc/apt/sources.list; wget -O - www.dotdeb.org/dotdeb.gpg | sudo apt-key add -; apt-get update;',
+      onlyif  => "test ! $(grep packages.dotdeb.org /etc/apt/sources.list.d/dotdeb.list)",
+      command => "echo \"deb http://packages.dotdeb.org ${::lsbdistcodename} all\" >> /etc/apt/sources.list.d/dotdeb.list; wget -O - www.dotdeb.org/dotdeb.gpg | apt-key add -; apt-get update",
     }
   } else {
     exec {"Fix FPM sources":
