@@ -22,10 +22,6 @@ It works on one simple principle:
 
 Same principle is in php fpm and ruby's thin configuration. And good puppet keeps our dynamically generated config directory always actual by "recurse => true, purge => true" of the file's parameters.
 
-## REQUIREMENTS
-
- * facter version >= 1.6.2 (for Debian squeeze install from backports.debian.org)
-
 ## Usage
 
 ### Install nginx
