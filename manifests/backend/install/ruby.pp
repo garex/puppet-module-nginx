@@ -14,7 +14,7 @@ class nginx::backend::install::ruby {
 
   exec {"Making thin bin visible":
     require   => Package["Ruby backend service"],
-    command   => "ln --symbolic $thin /usr/bin/thin",
+    command   => "ln --symbolic ${thin} /usr/bin/thin",
     creates   => "/usr/bin/thin",
   }
 
@@ -27,15 +27,15 @@ class nginx::backend::install::ruby {
   exec {"Install ruby backend service":
     require     => Exec["Making thin bin visible"],
     creates     => "/etc/thin",
-    command     => "thin install; $persistent_service",
+    command     => "thin install; ${persistent_service}",
   }
 
   file {"Ruby backend config directory should be fresh":
+      ensure    => directory,
       require   => Exec["Install ruby backend service"],
       recurse   => true,
       purge     => true,
       path      => "/etc/thin",
-      ensure    => directory
   }
 
   service {"thin":

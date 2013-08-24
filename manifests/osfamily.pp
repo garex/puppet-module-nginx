@@ -1,6 +1,7 @@
 if ! $::osfamily {
   case $::operatingsystem {
-    'RedHat', 'Fedora', 'CentOS', 'Scientific', 'SLC', 'Ascendos', 'CloudLinux', 'PSBM', 'OracleLinux', 'OVS', 'OEL': {
+    'RedHat', 'Fedora', 'CentOS', 'Scientific', 'SLC', 'Ascendos', 'CloudLinux',
+    'PSBM', 'OracleLinux', 'OVS', 'OEL': {
       $osfamily = 'RedHat'
     }
     'ubuntu', 'debian': {

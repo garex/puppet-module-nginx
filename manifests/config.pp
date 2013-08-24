@@ -11,28 +11,28 @@ class nginx::config {
       content   => template("nginx/nginx.conf.erb");
 
     "Nginx default www directory":
+      ensure    => directory,
       owner     => "root",
       group     => "root",
-      path      => "/var/www",
-      ensure    => directory;
+      path      => "/var/www";
 
     "Nginx config directory should be fresh":
+      ensure    => directory,
       recurse   => true,
       purge     => true,
-      path      => "/etc/nginx/conf.d",
-      ensure    => directory;
+      path      => "/etc/nginx/conf.d";
 
     "Nginx sites enabled":
+      ensure    => absent,
       path      => "/etc/nginx/sites-enabled",
       recurse   => true,
-      force     => true,
-      ensure    => absent;
+      force     => true;
 
     "Nginx sites available":
+      ensure    => absent,
       path      => "/etc/nginx/sites-available",
       recurse   => true,
-      force     => true,
-      ensure    => absent;
+      force     => true;
   }
 
 }

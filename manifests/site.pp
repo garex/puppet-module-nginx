@@ -14,40 +14,40 @@ define nginx::site (
 
   $server_name_0 = inline_template("<%= server_name.split(' ')[0] %>")
   if $is_independent_logs {
-    $logs_prefix = "$server_name_0."
+    $logs_prefix = "${server_name_0}."
   } else {
     $logs_prefix = ""
   }
 
   file {
-     $root:
+    $root:
       ensure  => directory,
       require => File["Nginx default www directory"],
       recurse => false,
       owner   => $root_owner,
       group   => $root_group;
 
-    "Nginx root directory for site $name":
-      require => File[$root],
+    "Nginx root directory for site ${name}":
       ensure  => "present",
-      path    => "/tmp/puppet-module-nginx-site-workaround-for-bug-4867-$name";
+      require => File[$root],
+      path    => "/tmp/puppet-module-nginx-site-bug-4867-workaround-${name}";
 
-    "Nginx configuration file for site $name":
-      path    => "/etc/nginx/conf.d/$name.site.conf",
+    "Nginx configuration file for site ${name}":
+      path    => "/etc/nginx/conf.d/${name}.site.conf",
       content => template("nginx/site.conf.erb"),
       require => [
-        File["Nginx root directory for site $name"],
+        File["Nginx root directory for site ${name}"],
         Package["nginx"]
       ],
       notify  => Service["nginx"];
   }
 
   if $custom_inside {
-    file {"Nginx custom configuration file for site $name":
+    file {"Nginx custom configuration file for site ${name}":
       ensure  => "present",
-      path    => "/etc/nginx/conf.d/$name.custom.inside.conf",
+      path    => "/etc/nginx/conf.d/${name}.custom.inside.conf",
       source  => $custom_inside,
-      require => File["Nginx configuration file for site $name"],
+      require => File["Nginx configuration file for site ${name}"],
       notify  => Service["nginx"];
     }
   }
