@@ -1,7 +1,7 @@
 class nginx (
   $user               = $::osfamily ? {
-    RedHat                     => "nginx",
-    default                    => "www-data"
+    RedHat                     => 'nginx',
+    default                    => 'www-data'
   },
   $worker_processes     = $::processorcount,
   $worker_connections   = 1024,
@@ -13,6 +13,6 @@ class nginx (
   include nginx::config
   include nginx::service
 
-  Class["nginx::package"] -> Class["nginx::config"] ~> Class["nginx::service"]
+  Class['nginx::package'] -> Class['nginx::config'] ~> Class['nginx::service']
 
 }
