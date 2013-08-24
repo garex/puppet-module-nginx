@@ -19,7 +19,7 @@ class nginx::backend::install::php {
       require => Package['PHP FPM and CGI']
   }
 
-  if ($::operatingsystem == debian) {
+  if ($::osfamily == Debian) {
     exec {'Fix FPM sources':
       onlyif  => 'test ! $(grep packages.dotdeb.org /etc/apt/sources.list)',
       command => 'echo "deb http://packages.dotdeb.org stable all" >> /etc/apt/sources.list; wget -O - www.dotdeb.org/dotdeb.gpg | sudo apt-key add -; apt-get update;',
