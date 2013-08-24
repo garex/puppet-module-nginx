@@ -18,7 +18,7 @@ class nginx::backend::install::ruby {
     creates   => '/usr/bin/thin',
   }
 
-  if ($::operatingsystem == debian) {
+  if ($::osfamily == Debian) {
     $persistent_service = '/usr/sbin/update-rc.d -f thin defaults;'
   } else {
     $persistent_service = ''
