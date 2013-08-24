@@ -1,4 +1,3 @@
-# /manifests/backend/install/php.pp
 class nginx::backend::install::php {
 
   # Set global defaults
