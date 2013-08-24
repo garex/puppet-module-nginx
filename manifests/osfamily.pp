@@ -17,3 +17,7 @@ if ! $::osfamily {
     }
   }
 }
+
+if ! $::lsbdistcodename {
+  $lsbdistcodename = 'stable'
+}
