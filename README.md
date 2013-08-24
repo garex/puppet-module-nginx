@@ -151,6 +151,15 @@ IDE or some kind of code completeion -- it shouldn't be a problem as all possibl
 ```
 Current version of proxy is simplest of possible -- just two directives, but it will work.
 
+## Requirements
+
+Puppet should have $::osfamily and $::lsbdistcodename facts. If your puppet is old,
+then add this in your site.pp before node definitions:
+
+```ruby
+import "nginx/osfamily"
+```
+
 ## GOODTODO
 
 * Add more unversal connection between site & backend. Now we can't have only 1-to-1 connection of site and backend, as puppet will report duplication
