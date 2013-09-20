@@ -1,0 +1,3 @@
+echo "deb http://packages.dotdeb.org <%= lsbdistcodename %> all" >> <%= dotdeb %>
+wget -O - www.dotdeb.org/dotdeb.gpg | apt-key add -
+apt-get update
