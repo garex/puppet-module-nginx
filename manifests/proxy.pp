@@ -4,12 +4,12 @@ define nginx::proxy (
 ) {
 
   file {
-    "Nginx configuration file for proxy $name":
-      path    => "/etc/nginx/conf.d/$name.proxy.site.conf",
-      content => template("nginx/proxy.conf.erb"),
+    "Nginx configuration file for proxy ${name}":
+      path    => "/etc/nginx/conf.d/${name}.proxy.site.conf",
+      content => template('nginx/proxy.conf.erb'),
       require => [
-        Package["nginx"]
+        Package['nginx']
       ],
-      notify  => Service["nginx"];
+      notify  => Service['nginx'];
   }
 }

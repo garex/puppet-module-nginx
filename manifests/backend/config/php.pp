@@ -349,21 +349,21 @@ class nginx::backend::config::php (
   $apc__lazy_classes = undef
 ) {
 
-  $_dynamic_ini_dir = $::osfamily ? {
-    "RedHat"  => "/etc/php.d",
-    default   => "/etc/php5/conf.d",
+  $INI_DIR = $::osfamily ? {
+    'RedHat'  => '/etc/php.d',
+    default   => '/etc/php5/conf.d',
   }
 
-  file {"PHP dynamic directory must exists":
-    path    => $_dynamic_ini_dir,
-    ensure  => "directory",
+  file {'PHP dynamic directory must exists':
+    ensure  => 'directory',
+    path    => $INI_DIR,
   }
 
-  file {"PHP manual config from defined parameters":
-    ensure  => "present",
-    content => template("nginx/backend.config.php.ini.erb"),
-    path    => "$_dynamic_ini_dir/_.manual.ini",
-    notify  => Service["php5-fpm"],
+  file {'PHP manual config from defined parameters':
+    ensure  => 'present',
+    content => template('nginx/backend.config.php.ini.erb'),
+    path    => "${$INI_DIR}/_.manual.ini",
+    notify  => Service['php5-fpm'],
   }
 
 }
