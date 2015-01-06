@@ -15,6 +15,9 @@ define nginx::backend::php (
       File["Nginx root directory for site ${name}"],
       Package['nginx']
     ],
+    mode    => 0400,
+    owner   => 'root',
+    group   => 'root',
     notify  => [Service['nginx'], Service['php5-fpm']]
   }
 

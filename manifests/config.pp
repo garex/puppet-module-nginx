@@ -22,6 +22,15 @@ class nginx::config {
       purge     => true,
       path      => '/etc/nginx/conf.d';
 
+    'Nginx ssl directory should be fresh':
+      ensure    => directory,
+      recurse   => true,
+      purge     => true,
+      owner     => 'root',
+      group     => 'root',
+      mode      => 500,
+      path      => '/etc/nginx/ssl';
+
     'Nginx sites enabled':
       ensure    => absent,
       path      => '/etc/nginx/sites-enabled',

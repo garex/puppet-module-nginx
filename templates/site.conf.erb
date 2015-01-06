@@ -1,14 +1,28 @@
 include "conf.d/<%= name %>.*.before.conf";
 
-<% if @redirect_from_aliases -%>
-  server {
-    server_name <%= redirect_from_aliases %>;
-    return 301 $scheme://<%= server_name_0 %>$request_uri;
-  }
-<% end -%>
+<% if @redirect_from_aliases -%><% if @ssl_certificate -%>
 server {
-<% if is_default -%>
+  listen        80;
+  server_name <%= server_name_0 redirect_from_aliases %>;
+  return 301 https://<%= server_name_0 %>$request_uri;
+}
+<% else -%>
+server {
+  server_name <%= redirect_from_aliases %>;
+  return 301 $scheme://<%= server_name_0 %>$request_uri;
+}
+<% end -%><% end -%>
+server {
+<% if @ssl_certificate -%>
+  listen        443 ssl;
+<% elsif is_default -%>
   listen        80 default;
+<% end -%>
+<% if @ssl_certificate -%>
+  ssl_certificate     "/etc/nginx/ssl/<%= name %>.crt";
+<% end -%>
+<% if @ssl_certificate_key -%>
+  ssl_certificate_key     "/etc/nginx/ssl/<%= name %>.key";
 <% end -%>
   server_name   <%= server_name %>;
   root          <%= root %>;
