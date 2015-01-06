@@ -1,6 +1,7 @@
 define nginx::site (
   $server_name,
   $root,
+  $is_create_root         = true,
   $ssl_certificate        = undef,
   $ssl_certificate_key    = undef,
   $redirect_from_aliases  = undef,
@@ -21,14 +22,18 @@ define nginx::site (
     $logs_prefix = ''
   }
 
-  file {
-    $root:
-      ensure  => directory,
-      require => File['Nginx default www directory'],
-      recurse => false,
-      owner   => $root_owner,
-      group   => $root_group;
+  if $is_create_root {
+    file {
+      $root:
+        ensure  => directory,
+        require => File['Nginx default www directory'],
+        recurse => false,
+        owner   => $root_owner,
+        group   => $root_group;
+    }
+  }
 
+  file {
     "Nginx root directory for site ${name}":
       ensure  => 'present',
       require => File[$root],
