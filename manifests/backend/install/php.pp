@@ -7,7 +7,7 @@ class nginx::backend::install::php {
 
   package {'PHP commons':
     ensure  => installed,
-    name    => ['php5-cli', 'php5-common', 'php5-suhosin']
+    name    => ['php5-cli', 'php5-common']
   }
 
   file {'PHP FPM pool config directory should be fresh':
