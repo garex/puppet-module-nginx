@@ -3,7 +3,7 @@ include "conf.d/<%= name %>.*.before.conf";
 <% if @redirect_from_aliases -%><% if @ssl_certificate -%>
 server {
   listen        80;
-  server_name <%= server_name_0 redirect_from_aliases %>;
+  server_name <%= server_name_0 %> <%= redirect_from_aliases %>;
   return 301 https://<%= server_name_0 %>$request_uri;
 }
 <% else -%>
