@@ -4,6 +4,7 @@ define nginx::site (
   $is_create_root         = true,
   $ssl_certificate        = undef,
   $ssl_certificate_key    = undef,
+  $ssl_listen             = '443',
   $redirect_from_aliases  = undef,
   $root_owner             = undef,
   $root_group             = undef,

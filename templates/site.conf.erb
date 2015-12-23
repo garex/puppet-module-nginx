@@ -14,7 +14,7 @@ server {
 <% end -%><% end -%>
 server {
 <% if @ssl_certificate -%>
-  listen        443 ssl;
+  listen        <%= ssl_listen %> ssl;
 <% elsif is_default -%>
   listen        80 default;
 <% end -%>
