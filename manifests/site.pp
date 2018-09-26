@@ -13,7 +13,8 @@ define nginx::site (
   $is_default             = false,
   $is_independent_logs    = false,
   $client_max_body_size   = undef,
-  $custom_inside          = undef
+  $custom_inside          = undef,
+  $is_create_ssl_files    = true,
 ) {
 
   $server_name_0 = inline_template('<%= server_name.split(" ")[0] %>')
@@ -53,7 +54,7 @@ define nginx::site (
       notify  => Service['nginx'];
   }
 
-  if $ssl_certificate {
+  if $ssl_certificate and $is_create_ssl_files {
     file {"Nginx SSL certificate for site ${name}":
       ensure  => 'present',
       path    => "/etc/nginx/ssl/${name}.crt",
@@ -66,7 +67,7 @@ define nginx::site (
     }
   }
 
-  if $ssl_certificate_key {
+  if $ssl_certificate_key and $is_create_ssl_files {
     file {"Nginx SSL key for site ${name}":
       ensure  => 'present',
       path    => "/etc/nginx/ssl/${name}.key",
